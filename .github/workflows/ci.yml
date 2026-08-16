@@ -17,3 +17,11 @@ jobs:
 
       - name: Verify HTML File
         run: test -f index.html
+
+      - name: Notify Slack
+        if: success()
+        run: |
+          curl -X POST \
+            -H 'Content-type: application/json' \
+            --data '{"text":"🟢 CI Pipeline completed successfully for devops-webapp!"}' \
+            "${{ secrets.SLACK_WEBHOOK_URL }}"
